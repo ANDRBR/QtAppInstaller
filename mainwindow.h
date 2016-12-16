@@ -1,11 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#define _VERSION "v.0.2"
+
 #include <QMainWindow>
 #include <QGroupBox>
 #include <QLayout>
 #include <QCheckBox>
 #include "applist.h"
+#include "installdialog.h"
 
 namespace Ui {
 	class MainWindow;
@@ -34,6 +37,7 @@ class MainWindow : public QMainWindow
 		QCheckBox *appSel;
 		QGroupBox *categoryGroups;
 		QVBoxLayout *appLayout;
+		InstallDialog *installDialog;
 };
 
 #endif // MAINWINDOW_H

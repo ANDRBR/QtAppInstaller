@@ -5,6 +5,9 @@
 #define APP_NAMES 1
 #define APP_DIRS 2
 #define APP_ICONS 3
+#define NATIVE_SEP_ QDir::toNativeSeparators("/")
+#define APP_DIR_ QDir::toNativeSeparators("./Apps")
+#define ICON_DIR_ QDir::toNativeSeparators("./Resources/")
 
 #include <QtCore>
 

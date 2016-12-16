@@ -14,12 +14,15 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    applist.cpp
+    applist.cpp \
+    installdialog.cpp
 
 HEADERS  += mainwindow.h \
-    applist.h
+    applist.h \
+    installdialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    installdialog.ui
 
 RESOURCES += \
     langs.qrc

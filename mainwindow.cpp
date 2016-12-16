@@ -1,8 +1,3 @@
-#define NATIVE_SEP_ QDir::toNativeSeparators("/")
-#define APP_DIR_ QDir::toNativeSeparators("./Apps")
-#define ICON_DIR_ QDir::toNativeSeparators("./Resources/")
-
-
 #include <QMessageBox>
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
@@ -61,7 +56,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::OnAbout(){
 	QMessageBox::about(0, tr("About AppInstaller"),
-					   tr("AppInstaller\n\n"\
+					   tr("AppInstaller ") + _VERSION + tr("\n\n"\
 					   "\tThis program executes in sequence the apps selected by the user "\
 					   "in order to install them in a more comfortable manner."));
 }
@@ -98,14 +93,7 @@ void MainWindow::OnOpenAppFolder(){
 }
 
 void MainWindow::OnInstall(){
-	int nApps = appList->AppsAmount();
-	QString cmd;
-	QProcess process;
-	for(int i=0; i<nApps; i++){
-		if(appSel[i].isChecked()){
-			cmd = APP_DIR_ + NATIVE_SEP_ + appList->GetAppValue(APP_DIRS, i);
-			process.start(cmd);
-			process.waitForFinished(-1);
-		}
-	}
+	installDialog = new InstallDialog(0, appSel, appList);
+	installDialog->show();
+	installDialog->install();
 }
