@@ -2,6 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGroupBox>
+#include <QLayout>
+#include <QCheckBox>
+#include "applist.h"
 
 namespace Ui {
 	class MainWindow;
@@ -14,10 +18,22 @@ class MainWindow : public QMainWindow
 	public:
 		explicit MainWindow(QWidget *parent = 0);
 		~MainWindow();
+
+	public slots:
+		void OnAbout();
+		void OnSelectAll();
+		void OnInvertSelection();
+		void OnSelectNone();
+		void OnModifyAppList();
+		void OnOpenAppFolder();
+		void OnInstall();
 		
 	private:
 		Ui::MainWindow *ui;
-
+		AppList *appList;
+		QCheckBox *appSel;
+		QGroupBox *categoryGroups;
+		QVBoxLayout *appLayout;
 };
 
 #endif // MAINWINDOW_H

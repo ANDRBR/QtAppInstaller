@@ -14,9 +14,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    listparsing.cpp
+    applist.cpp
 
 HEADERS  += mainwindow.h \
     applist.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    langs.qrc

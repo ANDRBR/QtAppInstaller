@@ -11,11 +11,16 @@
 class AppList{
 	public:
 		bool ReadAppList();
+		int FindCategoryIndex(QString category);
+		int CategoriesSize();
+		int AppsAmount();
+		int GetAppCategoryIndex(int index);
+		QString GetAppValue(int type, int index);
+		QString GetCategoryName(int index);
 
 	private:
 		QStringList categories;
 		QStringList apps[4];
-
 };
 
 #endif // APPLIST_H
