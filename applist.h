@@ -13,13 +13,30 @@
 
 class AppList{
 	public:
-		bool ReadAppList();
+		#define DEFAULT_LIST_PATH_ QDir("List.csv")
+		bool ReadAppList(QDir path = DEFAULT_LIST_PATH_);
+		bool CategoryExists(QString category);
 		int FindCategoryIndex(QString category);
 		int CategoriesSize();
 		int AppsAmount();
 		int GetAppCategoryIndex(int index);
 		QString GetAppValue(int type, int index);
 		QString GetCategoryName(int index);
+		QStringList* GetCategoriesRef();
+		void Clear();
+		void Append(QString category,
+					QString name,
+					QString dir,
+					QString icon);
+		void RemoveAt(int index);
+		void Replace(int i,
+					 QString category,
+					 QString name,
+					 QString dir,
+					 QString icon);
+
+	public slots:
+		void OnSaveList();
 
 	private:
 		QStringList categories;

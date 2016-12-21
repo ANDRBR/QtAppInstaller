@@ -8,11 +8,11 @@ InstallDialog::InstallDialog(QWidget *parent,
 							 ) :
 	QDialog(parent),
 	ui(new Ui::InstallDialog),
+	installingText(tr("Installing: ")),
 	appSel(selectors),
 	appList(List),
 	progress(0),
-	current(0),
-	installingText(tr("Installing: "))
+	current(0)
 {
 	ui->setupUi(this);
 	ui->installationLog->hide();
@@ -78,6 +78,7 @@ void InstallDialog::StartNextApp(){
 }
 
 void InstallDialog::OnFinishedInstalling(){
+	this->setCursor(QCursor(Qt::ArrowCursor));
 	ui->installLabel->setText(tr("Installation Finished"));
 	ui->installationLog->appendPlainText(tr("Progress: ") +
 										 QString("%1").arg(progress) +

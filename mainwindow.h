@@ -9,6 +9,7 @@
 #include <QCheckBox>
 #include "applist.h"
 #include "installdialog.h"
+#include "editcsvlist.h"
 
 namespace Ui {
 	class MainWindow;
@@ -23,6 +24,7 @@ class MainWindow : public QMainWindow
 		~MainWindow();
 
 	public slots:
+		void Restart();
 		void OnAbout();
 		void OnSelectAll();
 		void OnInvertSelection();
@@ -38,6 +40,7 @@ class MainWindow : public QMainWindow
 		QGroupBox *categoryGroups;
 		QVBoxLayout *appLayout;
 		InstallDialog *installDialog;
+		EditCSVList *editListDialog;
 };
 
 #endif // MAINWINDOW_H

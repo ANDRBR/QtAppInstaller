@@ -5,12 +5,14 @@
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::MainWindow),
-	appList(new AppList)
+	appList(new AppList),
+	editListDialog(new EditCSVList)
 {
 	ui->setupUi(this);
 
 	if(!appList->ReadAppList()){
-		QMessageBox::warning(0,"Error reading app list","File \"List.csv\" Invalid or Not Found");
+
+		QMessageBox::warning(0,tr("Error reading app list"),tr("File \"List.csv\" Invalid or Not Found"));
 		return;
 	}
 
@@ -46,12 +48,17 @@ MainWindow::MainWindow(QWidget *parent) :
 	connect(ui->actionModify_App_List, SIGNAL(triggered(bool)), this, SLOT(OnModifyAppList()));
 	connect(ui->actionOpen_App_Folder, SIGNAL(triggered(bool)), this, SLOT(OnOpenAppFolder()));
 	connect(ui->installButton, SIGNAL(clicked(bool)), this, SLOT(OnInstall()));
-
+	connect(editListDialog, SIGNAL(destroyed(QObject*)), this, SLOT(Restart()));
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::Restart(){
+	QProcess::startDetached(QCoreApplication::applicationFilePath());
+	close();
 }
 
 void MainWindow::OnAbout(){
@@ -83,7 +90,7 @@ void MainWindow::OnSelectNone(){
 }
 
 void MainWindow::OnModifyAppList(){
-
+	editListDialog->show();
 }
 
 void MainWindow::OnOpenAppFolder(){
