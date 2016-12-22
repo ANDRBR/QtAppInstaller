@@ -27,6 +27,7 @@ class EditCSVList : public QMainWindow
 		void OnAddNew();
 		void OnDeleteSelected();
 		void OnModifySelected();
+		void OnAutogenerate();
 		void OnItemChanged();
 		void OnNewList();
 		void OnReload();

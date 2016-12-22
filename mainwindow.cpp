@@ -63,7 +63,7 @@ void MainWindow::Restart(){
 
 void MainWindow::OnAbout(){
 	QMessageBox::about(0, tr("About AppInstaller"),
-					   tr("AppInstaller ") + _VERSION + tr("\n\n"\
+					   tr("AppInstaller ") + APP_VERSION + tr("\n\n"\
 					   "\tThis program executes in sequence the apps selected by the user "\
 					   "in order to install them in a more comfortable manner."));
 }

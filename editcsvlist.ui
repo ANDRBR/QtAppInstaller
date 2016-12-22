@@ -27,6 +27,15 @@
       <property name="dragEnabled">
        <bool>true</bool>
       </property>
+      <property name="dragDropOverwriteMode">
+       <bool>true</bool>
+      </property>
+      <property name="dragDropMode">
+       <enum>QAbstractItemView::NoDragDrop</enum>
+      </property>
+      <property name="defaultDropAction">
+       <enum>Qt::IgnoreAction</enum>
+      </property>
       <property name="selectionBehavior">
        <enum>QAbstractItemView::SelectRows</enum>
       </property>
@@ -202,6 +211,8 @@
     <addaction name="actionReload"/>
     <addaction name="actionSave"/>
     <addaction name="separator"/>
+    <addaction name="actionAutogenerate_Template"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -253,6 +264,11 @@
   <action name="actionDelete_Selected">
    <property name="text">
     <string>Delete Selected</string>
+   </property>
+  </action>
+  <action name="actionAutogenerate_Template">
+   <property name="text">
+    <string>Autogenerate Template</string>
    </property>
   </action>
  </widget>

@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = QtAppInstaller
 TEMPLATE = app
 
+VERSION = 1.2.0.1
+DEFINES += APP_VERSION='"\\\"v$$VERSION\\\""'
 
 SOURCES += main.cpp\
         mainwindow.cpp \

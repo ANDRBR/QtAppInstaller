@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Resources/langs/ES.qm</file>
+        <file>Resources/config/config.ini</file>
     </qresource>
 </RCC>
