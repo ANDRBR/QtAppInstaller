@@ -32,13 +32,13 @@ class MainWindow : public QMainWindow
 		void OnInstall();
 		
 	private:
-		Ui::MainWindow *ui;
-		AppList *appList;
-		QCheckBox *appSel;
-		QGroupBox *categoryGroups;
-		QVBoxLayout *appLayout;
-		InstallDialog *installDialog;
-		EditCSVList *editListDialog;
+		Ui::MainWindow *_ui;
+		AppList *_appList;
+		QCheckBox *_appSel;
+		QGroupBox *_categoryGroups;
+		QVBoxLayout *_appLayout;
+		InstallDialog *_installDialog;
+		EditCSVList *_editListDialog;
 };
 
 #endif // MAINWINDOW_H

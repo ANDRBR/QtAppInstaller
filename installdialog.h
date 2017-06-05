@@ -28,18 +28,18 @@ class InstallDialog : public QDialog
 		void OnUpdateProgress();
 
 	private:
-		Ui::InstallDialog *ui;
-		const QString installingText;
-		QCheckBox *appSel;
-		AppList *appList;
+		Ui::InstallDialog *_ui;
+		const QString _installingText;
+		QCheckBox *_appSel;
+		AppList *_appList;
 
-		int progress;
-		int current;
-		QStringList appsDirs;
-		QStringList appsNames;
-		QProcess process;
+		int _progress;
+		int _current;
+		QStringList _appsDirs;
+		QStringList _appsNames;
+		QProcess _process;
 
-		void OnFinishedInstalling();
+		void _OnFinishedInstalling();
 
 };
 

@@ -1,16 +1,17 @@
 #include <QMessageBox>
+#include "embeddediconextractor.h"
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
-	ui(new Ui::MainWindow),
-	appList(new AppList),
-	editListDialog(new EditCSVList)
+	_ui(new Ui::MainWindow),
+	_appList(new AppList),
+	_editListDialog(new EditCSVList)
 {
-	ui->setupUi(this);
+	_ui->setupUi(this);
 
-	if(!appList->ReadAppList()){
+	if(!_appList->ReadAppList()){
 
 		QMessageBox::warning(0,tr("Error reading app list"),tr("File \"List.csv\" Invalid or Not Found"));
 		return;
@@ -18,42 +19,42 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	//create the category widgets
 	{
-		int categoriesSize = appList->CategoriesSize();
-		int appsAmount = appList->AppsAmount();
+		int categoriesSize = _appList->CategoriesSize();
+		int appsAmount = _appList->AppsAmount();
 		int cols = categoriesSize - categoriesSize / 2;
 
-		categoryGroups = new QGroupBox[categoriesSize];
-		appLayout = new QVBoxLayout[categoriesSize];
+		_categoryGroups = new QGroupBox[categoriesSize];
+		_appLayout = new QVBoxLayout[categoriesSize];
 		for(int i=0, row=0; i<categoriesSize; row++){
 			for(int col=0; col<cols && i<categoriesSize; col++, i++){
-				categoryGroups[i].setTitle(tr(appList->GetCategoryName(i).toStdString().c_str()));
-				ui->categoriesLayout->addWidget(&categoryGroups[i], row, col);
-				categoryGroups[i].setLayout(&appLayout[i]);
+				_categoryGroups[i].setTitle(tr(_appList->GetCategoryName(i).toStdString().c_str()));
+				_ui->categoriesLayout->addWidget(&_categoryGroups[i], row, col);
+				_categoryGroups[i].setLayout(&_appLayout[i]);
 			}
 		}
 
-		appSel = new QCheckBox[appsAmount];
+		_appSel = new QCheckBox[appsAmount];
 		for(int i=0; i<appsAmount; i++){
-			appSel[i].setText(appList->GetAppValue(APP_NAMES, i));
-			appSel[i].setIcon(QIcon(QString(ICON_DIR_).append(appList->GetAppValue(APP_ICONS, i))));
-			appLayout[appList->GetAppCategoryIndex(i)].addWidget(&appSel[i]);
+			_appSel[i].setText(_appList->GetAppValue(APP_NAMES, i));
+			_appSel[i].setIcon(QIcon(EmbeddedIconExtractor(APP_DIR_ + NATIVE_SEP_ + _appList->GetAppValue(APP_DIRS,i)).extract()));
+			_appLayout[_appList->GetAppCategoryIndex(i)].addWidget(&_appSel[i]);
 		}
 	}
 
-	connect(ui->actionExit, &QAction::triggered, this, &MainWindow::close);
-	connect(ui->actionAbout, SIGNAL(triggered(bool)), this, SLOT(OnAbout()));
-	connect(ui->actionInvert_Selection, SIGNAL(triggered(bool)), this, SLOT(OnInvertSelection()));
-	connect(ui->actionSelect_All, SIGNAL(triggered(bool)), this, SLOT(OnSelectAll()));
-	connect(ui->actionSelect_None, SIGNAL(triggered(bool)), this, SLOT(OnSelectNone()));
-	connect(ui->actionModify_App_List, SIGNAL(triggered(bool)), this, SLOT(OnModifyAppList()));
-	connect(ui->actionOpen_App_Folder, SIGNAL(triggered(bool)), this, SLOT(OnOpenAppFolder()));
-	connect(ui->installButton, SIGNAL(clicked(bool)), this, SLOT(OnInstall()));
-	connect(editListDialog, SIGNAL(destroyed(QObject*)), this, SLOT(Restart()));
+	connect(_ui->actionExit, &QAction::triggered, this, &MainWindow::close);
+	connect(_ui->actionAbout, SIGNAL(triggered(bool)), this, SLOT(OnAbout()));
+	connect(_ui->actionInvert_Selection, SIGNAL(triggered(bool)), this, SLOT(OnInvertSelection()));
+	connect(_ui->actionSelect_All, SIGNAL(triggered(bool)), this, SLOT(OnSelectAll()));
+	connect(_ui->actionSelect_None, SIGNAL(triggered(bool)), this, SLOT(OnSelectNone()));
+	connect(_ui->actionModify_App_List, SIGNAL(triggered(bool)), this, SLOT(OnModifyAppList()));
+	connect(_ui->actionOpen_App_Folder, SIGNAL(triggered(bool)), this, SLOT(OnOpenAppFolder()));
+	connect(_ui->installButton, SIGNAL(clicked(bool)), this, SLOT(OnInstall()));
+	connect(_editListDialog, SIGNAL(destroyed(QObject*)), this, SLOT(Restart()));
 }
 
 MainWindow::~MainWindow()
 {
-	delete ui;
+	delete _ui;
 }
 
 void MainWindow::Restart(){
@@ -69,28 +70,28 @@ void MainWindow::OnAbout(){
 }
 
 void MainWindow::OnSelectAll(){
-	int nApps = appList->AppsAmount();
+	int nApps = _appList->AppsAmount();
 	for(int i=0; i<nApps; i++){
-		appSel[i].setChecked(true);
+		_appSel[i].setChecked(true);
 	}
 }
 
 void MainWindow::OnInvertSelection(){
-	int nApps = appList->AppsAmount();
+	int nApps = _appList->AppsAmount();
 	for(int i=0; i<nApps; i++){
-		appSel[i].toggle();
+		_appSel[i].toggle();
 	}
 }
 
 void MainWindow::OnSelectNone(){
-	int nApps = appList->AppsAmount();
+	int nApps = _appList->AppsAmount();
 	for(int i=0; i<nApps; i++){
-		appSel[i].setChecked(false);
+		_appSel[i].setChecked(false);
 	}
 }
 
 void MainWindow::OnModifyAppList(){
-	editListDialog->show();
+	_editListDialog->show();
 }
 
 void MainWindow::OnOpenAppFolder(){
@@ -100,7 +101,7 @@ void MainWindow::OnOpenAppFolder(){
 }
 
 void MainWindow::OnInstall(){
-	installDialog = new InstallDialog(0, appSel, appList);
-	installDialog->show();
-	installDialog->install();
+	_installDialog = new InstallDialog(0, _appSel, _appList);
+	_installDialog->show();
+	_installDialog->install();
 }

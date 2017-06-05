@@ -22,8 +22,8 @@ class EditCSVList : public QMainWindow
 		void LoadTable();
 
 	public slots:
+		void OnItemClicked();
 		void OnBrowseDir();
-		void OnBrowseIcon();
 		void OnAddNew();
 		void OnDeleteSelected();
 		void OnModifySelected();
@@ -35,11 +35,11 @@ class EditCSVList : public QMainWindow
 		void OnSave();
 
 	private:
-		Ui::EditCSVList *ui;
-		AppList *appList;
-		QStringList headerLabels;
+		Ui::EditCSVList *_ui;
+		AppList *_appList;
+		QStringList _headerLabels;
 
-		QTableWidgetItem previousItem;
+		QTableWidgetItem _previousItem;
 
 	protected:
 		void closeEvent(QCloseEvent *event);

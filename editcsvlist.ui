@@ -147,30 +147,6 @@
            </property>
           </widget>
          </item>
-         <item row="6" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Icon</string>
-           </property>
-           <property name="buddy">
-            <cstring>iconEdit</cstring>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <layout class="QFormLayout" name="formLayout_3">
-           <item row="0" column="0">
-            <widget class="QLineEdit" name="iconEdit"/>
-           </item>
-           <item row="0" column="1">
-            <widget class="QPushButton" name="iconBrowse">
-             <property name="text">
-              <string>Browse...</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
          <item row="5" column="1">
           <layout class="QFormLayout" name="formLayout_2">
            <item row="0" column="0">
@@ -277,8 +253,6 @@
   <tabstop>nameEdit</tabstop>
   <tabstop>dirEdit</tabstop>
   <tabstop>dirBrowse</tabstop>
-  <tabstop>iconEdit</tabstop>
-  <tabstop>iconBrowse</tabstop>
   <tabstop>addNewButton</tabstop>
   <tabstop>modifySelectedButton</tabstop>
   <tabstop>deleteSelectedButton</tabstop>

@@ -7,82 +7,82 @@ InstallDialog::InstallDialog(QWidget *parent,
 							 AppList *List
 							 ) :
 	QDialog(parent),
-	ui(new Ui::InstallDialog),
-	installingText(tr("Installing: ")),
-	appSel(selectors),
-	appList(List),
-	progress(0),
-	current(0)
+	_ui(new Ui::InstallDialog),
+	_installingText(tr("Installing: ")),
+	_appSel(selectors),
+	_appList(List),
+	_progress(0),
+	_current(0)
 {
-	ui->setupUi(this);
-	ui->installationLog->hide();
-	ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
-	ui->installLabel->setText(installingText);
+	_ui->setupUi(this);
+	_ui->installationLog->hide();
+	_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(false);
+	_ui->installLabel->setText(_installingText);
 
-	connect(ui->groupBox, SIGNAL(toggled(bool)), this, SLOT(OnShowLog()));
-	connect(&process, SIGNAL(finished(int)), this, SLOT(OnUpdateProgress()));
+	connect(_ui->groupBox, SIGNAL(toggled(bool)), this, SLOT(OnShowLog()));
+	connect(&_process, SIGNAL(finished(int)), this, SLOT(OnUpdateProgress()));
 }
 
 InstallDialog::~InstallDialog()
 {
-	delete ui;
+	delete _ui;
 }
 
 void InstallDialog::install(){
-	int nApps = appList->AppsAmount();
+	int nApps = _appList->AppsAmount();
 	int nAppsToInstall = 0;
 
 	for(int i=0; i<nApps; i++){
-		if(appSel[i].isChecked())
+		if(_appSel[i].isChecked())
 			nAppsToInstall++;
 	}
 
 	for(int i=0; i<nApps; i++){
-		if(appSel[i].isChecked()){
-			appsDirs << appList->GetAppValue(APP_DIRS, i);
-			appsNames << appList->GetAppValue(APP_NAMES, i);
+		if(_appSel[i].isChecked()){
+			_appsDirs << _appList->GetAppValue(APP_DIRS, i);
+			_appsNames << _appList->GetAppValue(APP_NAMES, i);
 		}
 	}
 	StartNextApp();
 }
 
 void InstallDialog::OnShowLog(){
-	(ui->groupBox->isChecked()) ?
-		ui->installationLog->show():
-		ui->installationLog->hide();
+	(_ui->groupBox->isChecked()) ?
+		_ui->installationLog->show():
+		_ui->installationLog->hide();
 }
 
 void InstallDialog::OnUpdateProgress(){
-	progress = current * 100 / appsDirs.size();
-	ui->progressBar->setValue(progress);
-	ui->progressBar->update();
+	_progress = _current * 100 / _appsDirs.size();
+	_ui->progressBar->setValue(_progress);
+	_ui->progressBar->update();
 	StartNextApp();
 }
 
 void InstallDialog::StartNextApp(){
-	if(current == appsDirs.size()){
-		OnFinishedInstalling();
+	if(_current == _appsDirs.size()){
+		_OnFinishedInstalling();
 		return;
 	}
 
-	ui->installLabel->setText(installingText + appsNames.at(current));
-	ui->installationLog->appendPlainText(tr("Progress: ") +
-										 QString("%1").arg(progress) +
+	_ui->installLabel->setText(_installingText + _appsNames.at(_current));
+	_ui->installationLog->appendPlainText(tr("Progress: ") +
+										 QString("%1").arg(_progress) +
 										 "%\n" +
-										 installingText +
-										 appsNames.at(current) +
+										 _installingText +
+										 _appsNames.at(_current) +
 										 "\n\n");
-	QString cmd = APP_DIR_ + NATIVE_SEP_ + appsDirs.at(current);
-	process.start(cmd);
-	current++;
+	QString cmd = APP_DIR_ + NATIVE_SEP_ + _appsDirs.at(_current);
+	_process.start(cmd);
+	_current++;
 }
 
-void InstallDialog::OnFinishedInstalling(){
+void InstallDialog::_OnFinishedInstalling(){
 	this->setCursor(QCursor(Qt::ArrowCursor));
-	ui->installLabel->setText(tr("Installation Finished"));
-	ui->installationLog->appendPlainText(tr("Progress: ") +
-										 QString("%1").arg(progress) +
+	_ui->installLabel->setText(tr("Installation Finished"));
+	_ui->installationLog->appendPlainText(tr("Progress: ") +
+										 QString("%1").arg(_progress) +
 										 tr("\%\nInstallation Finished"));
-	ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
-	ui->buttonBox->button(QDialogButtonBox::Cancel)->setEnabled(false);
+	_ui->buttonBox->button(QDialogButtonBox::Ok)->setEnabled(true);
+	_ui->buttonBox->button(QDialogButtonBox::Cancel)->setEnabled(false);
 }
